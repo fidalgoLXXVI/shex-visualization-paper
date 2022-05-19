@@ -1,0 +1,180 @@
+PREFIX wde: <http://www.wikidata.org/entity/>
+PREFIX wd: <http://www.wikidata.org/wiki/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX :    <http://example.org/>
+
+# This schema describes the GeneWiki subset from Wikidata
+# More information: https://elifesciences.org/articles/52614
+
+start=@:disease
+
+:active_site EXTRA :instanceOf {
+  :instanceOf  [ wd:Q423026 ]      ;
+  :isPartOf @:protein_family * ;
+}
+
+:anatomical_structure EXTRA :instanceOf {
+  :instanceOf  [ wd:Q4936952 ] ;
+  :isPartOf @:anatomical_structure * ; 
+  :composedBy @:anatomical_structure *
+}
+
+:binding_site EXTRA :instanceOf {
+  :instanceOf  [ wd:Q616005 ] ;
+  :isPartOf @:protein_family *
+}
+
+:biological_pathway EXTRA :instanceOf {
+  :instanceOf [ wd:Q4915012 ] ;
+  :isPartOf @:biological_pathway * ; 
+  :isPartOf @:gene * ; 
+  :composedBy @:biological_pathway * ;
+  :composedBy @:gene * ; 
+}
+
+
+:biological_process {
+  :instanceOf  [ wd:Q2996394 ] ;
+  :geneOntologyId xsd:string ;
+}
+
+:chemical_compound EXTRA :instanceOf {
+  :instanceOf  [ wd:Q11173 ] ;
+  :hasRole @:therapeutic_use * ;
+  :hasRole @:pharmacologic_action * ;
+  :farmacologicActionAlteredBy  @:therapeutic_use * ;
+  :farmacologicActionAlteredBy  @:pharmacologic_action * ;
+  :subclassOf  @:pharmacologic_action * ;
+  :activeIngredientIn @:pharmaceutical_product * ;
+  :medicalConditionTreatedIn @:disease * ;
+  :isPartOf  @:biological_pathway * ;
+  :isPartOf  @:medication * ; 
+  :foundInTaxon  @:taxon * ;
+  :stereoisomerOf @:chemical_compound * 
+}
+
+:chromosome EXTRA :instanceOf {
+  :instanceOf [ wd:Q37748 ]
+}
+
+:disease EXTRA :instanceOf {
+  :instanceOf   [ wd:Q12136 ] ;
+  :hasSymptom  @:disease * ;
+  :hasSymptom  @:symptom * ; 
+  :causedBy  @:taxon * ;
+  :geneticAssociation @:gene * ;
+  :anatomicalLocation  @:anatomical_structure * ;
+  :drugForTreatment @:medication * ;
+  :drugForTreatment @:chemical_compound * ;
+}
+
+:gene EXTRA :instanceOf {
+  :instanceOf   [ wd:Q7187 ] ;
+  :foundInTaxon  @:taxon * ;
+  :orthologist  @:gene * ; 
+  :involvedInBiologicalProcess  @:biological_process ;
+  :codifies  @:protein * ;
+  :composedBy  @:biological_pathway *;
+  :hasChromosome @:chromosome ;
+}
+
+:mechanism_of_action EXTRA :instanceOf {
+  :instanceOf [ wd:Q3271540 ] 
+}
+
+:medication EXTRA :instanceOf {
+  :instanceOf [ wd:Q12140 ] ;
+  :medicalConditionTreatedIn @:disease * ;
+  :activeIngredientIn @:pharmaceutical_product * ;
+  :composedBy  @:medication * ;
+  :isPartOf  @:biological_pathway * ;
+  :farmacologicActionAlteredBy  @:pharmacologic_action * ;
+  :farmacologicActionAlteredBy  @:chemical_compound * ;
+  :farmacologicActionAlteredBy  @:therapeutic_use * ;
+  :hasRole @:pharmacologic_action * ;
+  :hasRole @:therapeutic_use * ;
+  :subclassOf  @:pharmacologic_action * ;
+  :subclassOf  @:therapeutic_use * ;
+}
+
+:molecular_function {
+  :instanceOf [ wd:Q14860489 ] ;
+  :geneOntologyId xsd:string ;
+}
+
+:pharmaceutical_product EXTRA :instanceOf {
+  :instanceOf  [ wd:Q28885102 ] ;
+  :hasActiveIngredient @:therapeutic_use * ;
+  :hasActiveIngredient @:pharmacologic_action * ;
+  :hasActiveIngredient @:chemical_compound * ;
+  :therapeuticArea @:disease *
+}
+
+:pharmacologic_action EXTRA :instanceOf {
+  :instanceOf [wd:Q50377224 ] ;
+  :activeIngredientIn @:pharmaceutical_product * ;
+  :medicalConditionTreatedIn @:disease *
+}
+
+:protein_domain EXTRA :instanceOf {
+  :instanceOf  [ wd:Q898273 ] ;
+  :composedBy @:protein_domain * ;
+  :isPartOf @:protein_domain * ; 
+}
+
+:protein_family EXTRA :instanceOf {
+  :instanceOf  [ wd:Q417841 ] ;
+  :composedBy @:protein * ;
+}
+
+:protein EXTRA :instanceOf {
+  :instanceOf  [ wd:Q8054 ] ;
+  :interactsWith @:medication * ; 
+  :interactsWith @:protein  * ; 
+  :interactsWith @:chemical_compound  * ; 
+  :codifiedBy @:gene * ;
+  :isPartOf @:protein_family * ; 
+  :composedBy @:active_site * ;
+  :composedBy @:binding_site * ;
+  :hasMolecularFunction @:molecular_function * ;
+  :involvedInBiologicalProcess @:biological_process * ;
+  :foundInTaxon @:taxon * ;
+  :cellComponent @:anatomical_structure * ;
+  :cellComponent @:protein * ;
+}
+
+:ribosomal_RNA EXTRA :instanceOf {
+  :instanceOf  [ wd:Q28885102 ] ;
+  :foundInTaxon @:taxon *
+}
+
+:sequence_variant EXTRA :instanceOf {
+  :instanceOf   [ wd:Q15304597 ] ;
+  :negativeTherapeuticPredictor  @:chemical_compound * ; 
+  :positiveTherapeuticPredictor @:chemical_compound * ; 
+  :positiveTherapeuticPredictor @:medication * ; 
+  :negativeTherapeuticPredictor @:chemical_compound * ;
+  :negativeTherapeuticPredictor @:medication * ;
+  :biologicalVariantOf @:gene * ;
+  :hasChromosome @:chromosome * ;
+}
+
+
+:supersecondary_structure EXTRA :instanceOf {
+  :instanceOf [ wd:Q7644128 ] ;
+  :isPartOf . * 
+}
+
+:symptom EXTRA :instanceOf {
+  :instanceOf [ wd:Q169872 ]
+}
+
+:taxon EXTRA :instanceOf {
+  :instanceOf [ wd:Q16521 ] ; 
+}
+
+:therapeutic_use EXTRA :instanceOf {
+  :instanceOf   [ wd:Q50379781 ] ;
+  :hasActiveIngredient @:pharmaceutical_product * ;
+  :medicalConditionTreatedIn @:disease *
+}
