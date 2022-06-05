@@ -5,6 +5,6 @@ As required, all resources here available are provided as well with a single ZIP
 
 ## Organization
 
-* Code. ZIP files containing the code used for both Shumlex and 3DShEx prototypes.
+* Code. ZIP files containing the raw code used for both Shumlex and 3DShEx, as well as the prototypes used in the experiments.
 * Data. Datasets used in the experiments as well as the anonymized results.
 * Experiment material. Guides, manuals and forms used in the experiment.
